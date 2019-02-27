@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zbf.mapper.ShiJuanMapper">
+    <insert id="addShiJuanInfo" parameterType="map">
+        insert  into lcg_shijuan_fenlei(id,shijuanfenlei)
+        values (#{id},#{shijuanfenlei})
+    </insert>
+
+    <select id="getShijuanList" parameterType="page"  resultType="map">
+        select lsf.* from lcg_shijuan_fenlei lsf
+        <where>
+            <if test="params.shijuanfenlei!=null and params.shijuanfenlei!=''">and lsf.shijuanfenlei like CONCAT('%',#{params.shijuanfenlei},'%') </if>
+        </where>
+        order by lsf.shijuanfenlei desc
+    </select>
+
+    <delete id="deleteShijuan" parameterType="map">
+        delete  from  lcg_shijuan_fenlei
+        <where>
+            <if test="id!=null and id!=''">
+                and id=#{id}
+            </if>
+        </where>
+    </delete>
+
+    <update id="updateShijuan" parameterType="map" >
+        update lcg_shijuan_fenlei
+        <set>
+            <if test="shijuanfenlei!=null and shijuanfenlei!=''">shijuanfenlei=#{shijuanfenlei},</if>
+        </set>
+        <where>
+            <if test="id!=null and id!=''">and id=#{id} </if>
+        </where>
+    </update>
+
+    <!--<select id="getShijuanList" parameterType="page" resultType="map">
+         select * from lcg_shijuan
+        <where>
+            <if test="params.fenleiid !=null and params.fenleiid!=''">
+                and lt.fenleiid = #{params.fenleiid}
+            </if>
+            <if test="params.zhuangtai !=null and params.zhuangtai !=''">
+                and lt.zhuangtai = #{params.zhuangtai}
+            </if>
+        </where>
+
+    </select>-->
+
+
+
+
+</mapper>
